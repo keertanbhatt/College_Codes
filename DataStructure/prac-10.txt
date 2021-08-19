@@ -1,0 +1,155 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+struct node
+{
+struct node *next;
+int data;
+struct node *prev;
+};
+int n;
+struct node *st=NULL;
+struct node *tmp,*nav,*tmp1;
+struct node *create(struct node *st)
+{
+printf("\nenter -1 to end");
+printf("\nenter number:");
+scanf("%d",&n);
+while(n!=-1)
+{
+if(st==NULL)
+{
+nav=(struct node*)malloc(sizeof(struct node));
+nav->prev=NULL;
+nav->data=n;
+nav->next=NULL;
+st=nav;
+}
+else
+{
+tmp=st;
+nav=(struct node*)malloc(sizeof(struct node));
+nav->data=n;
+while(tmp->next!=NULL)
+tmp=tmp->next;
+tmp->next = nav;
+nav->prev = tmp;
+nav->next = NULL;
+}
+printf("\nenter data:");
+scanf("%d",&n);
+}
+return st;
+}
+struct node *inst_front(struct node *st)
+{
+printf("\nenter number:");
+scanf("%d",&n);
+nav=(struct node*)malloc(sizeof(struct node));
+nav->data=n;
+st->prev=nav;
+nav->next=st;
+nav->prev=NULL;
+st=nav;
+return st;
+}
+struct node *inst_last(struct node *st)
+{
+printf("\nenter number:");
+scanf("%d",&n);
+nav=(struct node*)malloc(sizeof(struct node));
+nav->data=n;
+tmp=st;
+while(tmp->next!=NULL)
+tmp=tmp->next;
+tmp->next=nav;
+nav->prev=tmp;
+nav->next=NULL;
+return st;
+}
+struct node *del_last(struct node *st)
+{
+struct node *save=NULL;
+tmp=st;
+while(tmp->next!=NULL)
+{
+save=tmp;
+tmp=tmp->next;
+}
+save->next=NULL;
+free(tmp);
+return st;
+}
+struct node *del_before(struct node *st)
+{
+int val;
+printf("\nenter value before which node has to delete:");
+scanf("%d",&val);
+tmp=st;
+while(tmp->data!=val)
+tmp=tmp->next;
+tmp1=tmp->prev;
+if(tmp1==st)
+{
+tmp=st;
+st=st->next;
+st->prev=NULL;
+}
+else
+{
+tmp->prev=tmp1->prev;
+tmp1->prev->next=tmp;
+}
+free(tmp1);
+return st;
+}
+struct node *display(struct node *st)
+{
+tmp=st;
+while(tmp!=NULL)
+{
+printf("%d-->",tmp->data);
+tmp=tmp->next;
+}
+return st;
+}
+void main()
+{
+int ch;
+clrscr();
+do
+{
+printf("\n1.create list\t2.insert at front\t3.insert at last");
+printf("\n4.delete at last\t5.delete before node\t6.display \t7.exit");
+printf("\nenter your choice:");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1:
+{
+st=create(st);
+printf("\ndoubly linkedlist created");
+}
+break;
+case 2:
+st=inst_front(st);
+break;
+case 3:
+st=inst_last(st);
+break;
+case 4:
+st=del_last(st);
+break;
+ PEN:190840131006
+case 5:
+st=del_before(st);
+break;
+case 6:
+st=display(st);
+break;
+case 7:
+exit(0);
+}
+}while(ch!=8);
+getch();
+}
