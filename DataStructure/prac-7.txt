@@ -1,0 +1,195 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+typedef struct node
+{
+	int info;
+	struct node *link;
+}node;
+node* insert_at_f(int x,node* first1)
+{
+	node *n;
+	n=(struct node*)malloc(sizeof (struct node));
+	n->info=x;
+	n->link=first1;
+	first1=n;
+	return first1;
+}
+node* insert_at_r(int x,node *f)
+{
+	node *n,*save;
+	n=(node *)malloc(sizeof(struct node));
+	n->info=x;
+	n->link=NULL;
+	save=f;
+	if(f==NULL)
+	{
+		f=n;
+	}
+	else
+	{
+		while(save->link!=NULL)
+		{
+			save=save->link;
+		}
+		save->link=n;
+	}
+	return f;
+}
+node* display(node *first)
+{
+	node *temp;
+	temp=first;
+	while(temp!=NULL)
+	{
+		printf("%d,",temp->info);
+		temp=temp->link;
+	}
+	return first;
+}
+node* delet_at_f(node *first)
+{
+	node *save;
+	if(first==NULL)
+	printf("\nno element.");
+	else
+	{
+		save=first;
+		printf("deleted element: %d",save->info);
+		first=save->link;
+		free(save);
+	}
+return first;
+}
+node* delet_at_r(node *first)
+{
+	node *temp,*s;
+	temp=first;
+	if(temp==NULL)
+	{
+		printf("\nno element.");
+	}
+	else
+	{
+		while(temp->link!=NULL)
+		{
+			temp=temp->link;
+		}
+		s=first;
+		while(s->link!=temp)
+		{
+			s=s->link;
+		}
+		s->link=NULL;
+		printf("\ndeleted element: %d",temp->info);
+		free(temp);
+	}
+	return first;
+}
+node* insert_at_ith(int x ,node* first)
+{
+	node *n,*save,*temp;
+	int i,a=1;
+	n=(struct node*)malloc(sizeof(struct node));
+	n->info=x;
+	printf("\nenter the before ith location of enter element : ");
+	scanf("%d",&i);
+	temp=first;
+	while(a!=(i+1))
+	{
+		temp=temp->link;
+		a++;
+	}
+	n->link=temp;
+	a=1;
+	save=first;
+	while(a!=(i))
+	{
+		save=save->link;
+		a++;
+	}
+	save->link=n;
+	return first;
+}
+node* delet_at_ith(node *first)
+{
+	node *save,*temp,*last;
+	int a=0,b=0,c=0,i;
+	if(first==NULL)
+	printf("\nno elements.");
+	else
+	{
+		printf("\nenter the ith location for deleted location: ");
+		scanf("%d",&i);
+		last=first;
+		while(a!=i)
+		{
+			last=last->link;
+			a++;
+		}
+		temp=first;
+		while(b!=(i-1))
+		{
+			temp=temp->link;
+			b++;
+		}
+		save=first;
+		while(c!=(i-2))
+		{
+			save=save->link;
+			c++;
+		}
+		printf("\ndeleted element: %d",temp->info);
+		free(temp);
+	}
+	save->link=last;
+	return first;
+}
+void main()
+{
+	node *first;
+	int n,i,x,choice;
+	clrscr();
+	first=NULL;
+	do
+	{
+		printf("\n1.insert at front\n2.insert at last\n3.delete at front\n4.delete at rear\n5.insert at specified location\n6.deletew at specified location\n7.display\n8.exit");
+		printf("\nenter the choice:");
+		scanf("%d",&choice);
+		switch(choice)
+		{
+			case 1:
+			printf("enter the element:");
+			scanf("%d",&n);
+			first=insert_at_f(n,first);
+			break;
+			case 2:
+			printf("\nenter element.");
+			scanf("%d",&x);
+			first=insert_at_r(x,first);
+			break;
+			case 3:
+			first=delet_at_f(first);
+			break;
+			case 4:
+			first=delet_at_r(first);
+			break;
+			case 5:
+			printf("\nenter the element: ");
+			scanf("%d",&x);
+			first=insert_at_ith(x,first);
+			break;
+			case 6:
+			first=delet_at_ith(first);
+			break;
+			case 7:
+			first=display(first);
+			break;
+			case 8:
+			exit(0);
+			break;
+		}
+	}
+	while(choice!=8);
+	getch();
+}
