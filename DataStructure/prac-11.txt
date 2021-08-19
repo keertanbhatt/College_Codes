@@ -1,0 +1,180 @@
+#include<stdio.h>
+#include<conio.h>
+typedef struct node
+{
+int info;
+struct node *link;
+}node;
+node *head=NULL,*last=NULL;
+void insert_first(int x)
+{
+node *n;
+n=(struct node*)malloc(sizeof(struct node));
+n-->info=x;
+if(head==NULL)
+{
+n-->link=NULL;
+head=n;
+last=n;
+}
+else
+{
+n-->link=head;
+head=n;
+last-->link=head;
+}
+}
+void insert_end(int x)
+{
+node *n;
+n=(struct node*)malloc(sizeof(struct node));
+n-->info=x;
+if(head==NULL)
+{
+n-->link=NULL;
+head=n;
+last=n;
+}
+else
+{
+last-->link=n;
+n-->link=head;
+last=n;
+}
+}
+void insert_mid(intx,int y)
+{
+node *n,*temp=head,*temp1=NULL;
+n=(struct node*)malloc(sizeof(struct node));
+n-->info=x;
+if(head==NULL)
+printf("no element.\n");
+else
+{
+while(temp-->info!=y && temp-->link!=head)
+{
+temp1=temp;
+temp=temp-->link;
+}
+temp1-->link=n;
+n-->link=temp;
+}
+}
+void delet_first()
+{
+node *temp=head;
+if(head==NULL)
+printf("no element.\n");
+else
+{
+printf("deleted elment: %d\n",temp-->info);
+head=temp-->link;
+free(temp);
+last-->link=head;
+}
+}
+void delet_end()
+{
+node *temp,*temp1=last;
+if(head==NULL)
+printf("no element.\n");
+else
+{
+temp=head;
+while(temp-->link!=last)
+temp=temp-->link;
+last=temp;
+temp-->link=head;
+printf("deleted element: %d\n",temp1-->info);
+free(temp1);
+}
+}
+void delet_mid(int y)
+{
+node *temp=head,*temp1=NULL;
+if(head==NULL)
+printf("no element.\n");
+else
+{
+while(temp-->info!=y && temp-->link!=head)
+{
+temp1=temp;
+temp=temp-->link;
+}
+if(temp-->link==head)
+printf("no specific element.\n");
+else
+{
+temp1-->link=temp-->link;
+printf("deleted element: %d\n",temp-->info);
+free(temp);
+}
+}
+}
+void display()
+{
+node *temp=head;
+if(head==NULL)
+printf("list empty.\n");
+else
+{
+printf("display element.: ");
+while(temp-->link!=head)
+{
+printf("%d,",temp-->info);
+temp=temp-->link;
+}
+printf("%d\n",temp-->info);
+}
+}
+void main()
+{
+int ch,a,b,c,d,e;
+clrscr();
+do
+{
+printf("1--insert at first\t");
+printf("2--insert at last\t");
+printf("3--insert at before of specific element\n");
+printf("4--delete at first\t");
+printf("5--delete at last\t");
+printf("6--delete at specific element\n");
+printf("7--display\t");
+printf("8--exit\n");
+printf("enter the choice: ");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1:printf("enter the element: ");
+scanf("%d",&a);
+insert_first(a);
+break;
+case 2:printf("enter the element: ");
+scanf("%d",&b);
+insert_end(b);
+break;
+case 3:printf("enter the element: ");
+scanf("%d",&c);
+printf("enter the specific element: ");
+scanf("%d",&d);
+insert_mid(c,d);
+break;
+case 4:delet_first();
+break;
+case 5:delet_end();
+break;
+case 6:
+printf("enter the specified element: ");
+scanf("%d",&e);
+delet_mid(e);
+break;
+case 7:display();
+ PEN:190840131006
+break;
+case 8:exit(0);
+break;
+}
+}
+while(ch!=8);
+getch();
+}
