@@ -1,0 +1,10 @@
+<html>
+    <body>
+        <h2>My CD Collection</h2>
+        <table border="1">
+            <tr bgcolor="#9acd32">
+                <th style="text-align:left">PEN</th><th style="text-align:left">FirstName</th><th style="text-align:left">LastName</th><th style="text-align:left">Semester</th><th style="text-align:left">MobileNumber</th>
+            </tr>
+        </table>
+    </body>
+</html>
